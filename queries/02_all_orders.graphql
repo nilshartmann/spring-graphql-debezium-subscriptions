@@ -1,0 +1,17 @@
+query {
+    orders {
+        id
+        discount
+        orderItems {
+            id
+            product
+            price
+            quantity
+        }
+        customer {
+            id
+            name
+            address
+        }
+    }
+}

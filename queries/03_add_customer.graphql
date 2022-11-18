@@ -1,0 +1,12 @@
+mutation AddCustomer {
+    addCustomer(input:{
+        name: "Paul", address: "Central str. 123"
+    }) {
+        ...on AddCustomerSuccessResult {
+            newCustomer { id name address }
+        }
+        ...on AddCustomerFailedResult {
+            errorMessage
+        }
+    }
+}

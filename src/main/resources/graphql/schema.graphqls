@@ -1,0 +1,67 @@
+type Customer {
+    id: ID!
+    name: String!
+    address: String!
+}
+
+input AddCustomerInput {
+    name: String!
+    address: String!
+}
+
+type AddCustomerSuccessResult {
+    newCustomer: Customer!
+}
+type AddCustomerFailedResult {
+    errorMessage: String!
+}
+
+union AddCustomerResult = AddCustomerSuccessResult|AddCustomerFailedResult
+
+
+
+type OrderItem {
+    id: ID!
+    product: String!
+    quantity: Int!
+    price: Float!
+}
+
+type Order {
+    id: ID!
+    customer: Customer!
+    orderItems: [OrderItem!]!
+    discount: Int
+}
+
+type Query {
+    customers: [Customer!]!
+    orders: [Order!]!
+    order(id: ID!): Order
+}
+
+input NewOrderItemInput {
+    product: String!
+    quantity: Int! = 1
+    price: Float!
+}
+
+input AddOrderInput {
+    customerId: ID!
+    discount: Int! = 0
+    orderItems: [NewOrderItemInput!]!
+}
+
+type AddOrderSuccessResult {
+    newOrder: Order!
+}
+type AddOrderFailedResult {
+    errorMessage: String!
+}
+
+union AddOrderResult = AddOrderSuccessResult|AddOrderFailedResult
+
+type Mutation {
+    addCustomer(input: AddCustomerInput!): AddCustomerResult!
+    addOrder(input: AddOrderInput!): AddOrderResult!
+}

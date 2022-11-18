@@ -1,0 +1,31 @@
+mutation AddOrder {
+    addOrder(input:{
+        customerId:1000,
+        discount:12
+        orderItems:[
+            {
+                product: "Beer",
+                price:2.4,
+                quantity:3
+
+            },
+            {
+                product:"Nachos",
+                price:1.8,
+                quantity:1
+            }
+        ]
+    }) {
+        ...on AddOrderSuccessResult {
+            newOrder {
+                id
+                orderItems { id }
+                discount
+            }
+        }
+        ...on AddOrderFailedResult {
+            errorMessage
+        }
+
+    }
+}

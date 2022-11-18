@@ -1,0 +1,16 @@
+{
+  "name": "order-service-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "order-service-db",
+    "database.port": "5432",
+    "database.user": "klaus",
+    "database.password": "secretpw",
+    "database.dbname" : "order_service_db",
+    "database.server.name": "order_service_db",
+    "schema.include.list": "public",
+    "topic.prefix": "order_app",
+    "plugin.name": "pgoutput"
+  }
+}

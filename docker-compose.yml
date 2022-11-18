@@ -1,0 +1,67 @@
+version: "3"
+services:
+  zookeeper:
+    image: quay.io/debezium/zookeeper:2.0
+    ports:
+      - "30218:2181"
+      - "30288:2888"
+      - "30388:3888"
+    environment:
+      - LOG_LEVEL=INFO
+      - SERVER_ID=1
+      - SERVER_COUNT=1
+  kafka:
+    image: quay.io/debezium/kafka:2.0
+    ports:
+      # NOTE: When you change the public exposed port of Kafka
+      #       You need to set a resolvable hostname or ip-address
+      #       in KAFKA_ADVERTISED_LISTENERS, for example:
+      #       KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://my-host-name:49092
+      #       You can NOT use docker.host.internal here, as the
+      #       IP must be resolvable from both host and docker
+      #       network
+      - "9092:9092"
+      - "29092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      - KAFKA_BROKER_ID=1
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENERS=LISTENER_BOB://kafka:29092,LISTENER_FRED://kafka:9092
+      - KAFKA_ADVERTISED_LISTENERS=LISTENER_BOB://kafka:29092,LISTENER_FRED://localhost:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=LISTENER_BOB:PLAINTEXT,LISTENER_FRED:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=LISTENER_BOB
+  order-service-db:
+    image: postgres:14.1-alpine
+    command:
+      - postgres
+      - -c
+      - log_statement=all
+      - -c
+      - wal_level=logical
+      - -c
+      - max_wal_senders=1
+      - -c
+      - max_replication_slots=1
+    ports:
+      - "30432:5432"
+    environment:
+      - POSTGRES_PASSWORD=secretpw
+      - POSTGRES_USER=klaus
+      - POSTGRES_DB=order_service_db
+    volumes:
+      - ./docker/init-db:/docker-entrypoint-initdb.d
+      - ./docker/db-data:/var/lib/postgresql/data
+  connect:
+    image: quay.io/debezium/connect:2.0
+    ports:
+      - "30083:8083"
+    depends_on:
+      - kafka
+      - order-service-db
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:29092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
