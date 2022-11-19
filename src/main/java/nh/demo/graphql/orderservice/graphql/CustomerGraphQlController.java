@@ -60,7 +60,7 @@ public class CustomerGraphQlController {
       return new AddCustomerFailedResult("Could not create order.");
     }
   }
-  record NewCustomerEvent(CustomerListener.NewCustomerMsg customer) {
+  record NewCustomerEvent(CustomerChangeEventMsg customer) {
   }
 
   @SubscriptionMapping

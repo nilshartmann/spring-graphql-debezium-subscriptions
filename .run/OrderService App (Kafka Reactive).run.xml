@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="OrderService App (Kafka Reactive)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="kafka-reactive" />
+    <module name="spring-graphql-debezium-subscriptions" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="nh.demo.graphql.orderservice.OrderServiceApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
