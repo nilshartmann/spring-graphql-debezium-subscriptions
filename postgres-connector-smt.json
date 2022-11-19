@@ -1,0 +1,25 @@
+{
+  "name": "order-service-connector-smt",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "order-service-db",
+    "database.port": "5432",
+    "database.user": "klaus",
+    "database.password": "secretpw",
+    "database.dbname" : "order_service_db",
+    "database.server.name": "order_service_db",
+    "schema.include.list": "public",
+    "topic.prefix": "order_app_smt",
+    "plugin.name": "pgoutput",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.add.fields": "op,table,source.ts_ms",
+    "transforms.unwrap.add.headers": "db",
+    "transforms.unwrap.delete.handling.mode": "rewrite"
+  }
+}

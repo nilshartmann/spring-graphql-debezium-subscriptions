@@ -40,9 +40,9 @@ services:
       - -c
       - wal_level=logical
       - -c
-      - max_wal_senders=1
+      - max_wal_senders=4
       - -c
-      - max_replication_slots=1
+      - max_replication_slots=4
     ports:
       - "30432:5432"
     environment:

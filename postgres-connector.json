@@ -11,6 +11,7 @@
     "database.server.name": "order_service_db",
     "schema.include.list": "public",
     "topic.prefix": "order_app",
-    "plugin.name": "pgoutput"
+    "plugin.name": "pgoutput",
+    "slot.name": "orderservice_replication_slot"
   }
 }

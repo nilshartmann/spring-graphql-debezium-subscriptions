@@ -65,3 +65,11 @@ type Mutation {
     addCustomer(input: AddCustomerInput!): AddCustomerResult!
     addOrder(input: AddOrderInput!): AddOrderResult!
 }
+
+type NewCustomerEvent {
+    customer: Customer!
+}
+
+type Subscription {
+    onNewCustomer: NewCustomerEvent!
+}
