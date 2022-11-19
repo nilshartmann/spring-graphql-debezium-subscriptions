@@ -23,6 +23,8 @@ public class CustomerReactiveListener implements CustomerListener {
     KafkaReceiver<String, CustomerChangeEventMsg> customerReceiver) {
     this.customerReceiver = customerReceiver;
     this.sink = Sinks.many().multicast().directBestEffort();
+
+    log.info("*** Using REACTIVE Kafka Listener");
   }
 
   @Override

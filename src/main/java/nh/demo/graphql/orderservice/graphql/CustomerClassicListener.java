@@ -19,6 +19,8 @@ public class CustomerClassicListener implements CustomerListener {
 
   public CustomerClassicListener() {
     this.sink = Sinks.many().multicast().directBestEffort();
+
+    log.info("*** Using CLASSIC Kafka Listener");
   }
 
   @KafkaListener(topics = "${order-service.topics.customer}",

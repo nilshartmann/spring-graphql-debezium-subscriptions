@@ -24,14 +24,11 @@ public class KafkaReactiveConfig {
                                                                              @Value("${order-service.topics.customer}") String topic
                                      ) {
     Map<String, Object> configProperties = properties.buildConsumerProperties();
-//    configProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class.getName());
-//    configProperties.put("spring.json.use.type.headers", "false");
-//    configProperties.put("spring.json.value.default.type", CustomerChangeEventMsg.class.getName());
     ReceiverOptions<String, CustomerChangeEventMsg> receiverOptions =
       ReceiverOptions.<String, CustomerChangeEventMsg>create(configProperties)
         .withValueDeserializer(new JsonDeserializer<>(CustomerChangeEventMsg.class))
         // we're not interessted in Kafka Messages that have been added to the topic
-        // while the server is not running
+        // while the server is not running:
         // if a (GraphQL) Client subscribes, it only should receive UPCOMING events
         .addAssignListener(partitions -> partitions.forEach(ReceiverPartition::seekToEnd))
         .subscription(Collections.singleton(topic));
