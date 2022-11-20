@@ -20,6 +20,7 @@
     "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
     "transforms.unwrap.add.fields": "op,table,source.ts_ms",
     "transforms.unwrap.add.headers": "db",
-    "transforms.unwrap.delete.handling.mode": "rewrite"
+    "transforms.unwrap.delete.handling.mode": "rewrite",
+    "decimal.handling.mode": "string"
   }
 }

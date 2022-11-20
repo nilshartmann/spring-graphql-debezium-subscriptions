@@ -12,6 +12,7 @@
     "schema.include.list": "public",
     "topic.prefix": "order_app",
     "plugin.name": "pgoutput",
-    "slot.name": "orderservice_replication_slot"
+    "slot.name": "orderservice_replication_slot",
+    "decimal.handling.mode": "string"
   }
 }
