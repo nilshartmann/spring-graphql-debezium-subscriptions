@@ -70,6 +70,13 @@ type NewCustomerEvent {
     customer: Customer!
 }
 
+
+type NewOrderEvent {
+    newOrder: Order!
+}
+
+
 type Subscription {
     onNewCustomer: NewCustomerEvent!
+    onNewOrder: NewOrderEvent!
 }

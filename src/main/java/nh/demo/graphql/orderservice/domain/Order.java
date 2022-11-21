@@ -18,7 +18,7 @@ public class Order {
   @JoinColumn(name = "customer_id")
   private Customer customer;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "order_id")
   private List<OrderItem> orderItems = new LinkedList<>();
 

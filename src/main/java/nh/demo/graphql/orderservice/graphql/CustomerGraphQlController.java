@@ -3,6 +3,7 @@ package nh.demo.graphql.orderservice.graphql;
 import nh.demo.graphql.orderservice.domain.Customer;
 import nh.demo.graphql.orderservice.domain.CustomerRepository;
 import nh.demo.graphql.orderservice.domain.CustomerService;
+import nh.demo.graphql.orderservice.graphql.kafka.CustomerChangeEventMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.Argument;

@@ -1,7 +1,7 @@
 package nh.demo.graphql.orderservice;
 
-import nh.demo.graphql.orderservice.graphql.CustomerChangeEventMsg;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
+import nh.demo.graphql.orderservice.graphql.kafka.CustomerChangeEventMsg;
+import nh.demo.graphql.orderservice.graphql.kafka.OrderChangeEventMsg;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
@@ -36,4 +36,19 @@ public class KafkaReactiveConfig {
     KafkaReceiver<String, CustomerChangeEventMsg> receiver = KafkaReceiver.create(receiverOptions);
     return receiver;
   }
+
+  @Bean("kafkaOrderReceiver")
+  public KafkaReceiver<String, OrderChangeEventMsg> kafkaOrderReceiver(KafkaProperties properties,
+                                                                          @Value("${order-service.topics.orders}") String topic
+  ) {
+    Map<String, Object> configProperties = properties.buildConsumerProperties();
+    ReceiverOptions<String, OrderChangeEventMsg> receiverOptions =
+      ReceiverOptions.<String, OrderChangeEventMsg>create(configProperties)
+        .withValueDeserializer(new JsonDeserializer<>(OrderChangeEventMsg.class))
+        .addAssignListener(partitions -> partitions.forEach(ReceiverPartition::seekToEnd))
+        .subscription(Collections.singleton(topic));
+
+    return KafkaReceiver.create(receiverOptions);
+  }
+
 }

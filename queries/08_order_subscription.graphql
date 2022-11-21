@@ -1,0 +1,14 @@
+subscription {
+    onNewOrder {
+        newOrder {
+            id
+            discount
+            orderItems {id product quantity price}
+            customer {
+                id
+                name
+                address
+            }
+        }
+    }
+}

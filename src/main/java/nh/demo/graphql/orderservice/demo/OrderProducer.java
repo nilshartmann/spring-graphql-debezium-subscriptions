@@ -1,5 +1,6 @@
-package nh.demo.graphql.orderservice.domain;
+package nh.demo.graphql.orderservice.demo;
 
+import nh.demo.graphql.orderservice.domain.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
